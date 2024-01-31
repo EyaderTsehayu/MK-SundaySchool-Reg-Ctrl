@@ -1,33 +1,38 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: "Poppins", sans-serif;
+
+  background: linear-gradient(to bottom, transparent, rgb(238, 242, 246))
+    rgb(238, 242, 246);
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+/* For WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar width */
+}
+
+/* For Firefox */
+/* Note: The scrollbarWidth property is not supported in Firefox */
+/* We set the width to 'thin' for Firefox */
+::-moz-scrollbar {
+  width: thin;
+}
+
+/* For IE and Edge */
+/* Note: The -ms-overflow-style property is not supported in Edge */
+/* We use scrollbar-width: none to hide the scrollbar in Edge */
+@supports (-ms-overflow-style: none) {
+  aside {
+    scrollbar-width: none;
   }
 }
