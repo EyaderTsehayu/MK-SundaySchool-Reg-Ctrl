@@ -39,7 +39,8 @@ const titleCont = {
 const title = {
   //margin: 0px;
   fontSize: "1.25rem",
-  color: "rgb(18, 25, 38)",
+  color: "#351478",
+  //color: "rgb(18, 25, 38)",
   fontFamily: "Poppins",
   lineHeight: 1.167,
   // fontWeight: 550,
@@ -48,13 +49,13 @@ const title = {
 const pathCont = {
   display: "flex",
 };
-export default function Breadcrumb() {
+export default function Breadcrumb({ brtitle, path }) {
   return (
     <Box className="mb-6">
       <Box sx={cardContainer}>
         <Box sx={titleCont}>
           <Typography sx={title} className="font-semibold">
-            Forms Validation
+            {brtitle}
           </Typography>
         </Box>
         <Box sx={pathCont} class="MuiGrid-root MuiGrid-item css-1wxaqej">
@@ -78,58 +79,10 @@ export default function Breadcrumb() {
                 sx={{ display: "flex", alignItems: "center" }}
                 color="text.primary"
               >
-                Breadcrumb
+                {path}
               </Typography>
             </Breadcrumbs>
           </div>
-          {/* <nav
-              class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1rrdvbm"
-              aria-label="breadcrumb"
-            >
-              <ol class="MuiBreadcrumbs-ol css-nhb8h9">
-                <li class="MuiBreadcrumbs-li">
-                  <a
-                    class="MuiTypography-root MuiTypography-subtitle1 css-kxpuwu"
-                    href="/"
-                  >
-                    <svg
-                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv"
-                      focusable="false"
-                      aria-hidden="true"
-                      viewBox="0 0 24 24"
-                      data-testid="HomeIcon"
-                      style="margin-right: 0px; margin-top: -2px; width: 1rem; height: 1rem; color: rgb(103, 58, 183);"
-                    >
-                      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
-                    </svg>
-                  </a>
-                </li>
-                <li
-                  aria-hidden="true"
-                  class="MuiBreadcrumbs-separator css-3mf706"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16px"
-                    height="16px"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="tabler-icon tabler-icon-chevron-right"
-                  >
-                    <path d="M9 6l6 6l-6 6"></path>
-                  </svg>
-                </li>
-                <li class="MuiBreadcrumbs-li">
-                  <h6 class="MuiTypography-root MuiTypography-subtitle1 css-m8bd4q">
-                    Forms Validation
-                  </h6>
-                </li>
-              </ol>
-            </nav> */}
         </Box>
       </Box>
     </Box>

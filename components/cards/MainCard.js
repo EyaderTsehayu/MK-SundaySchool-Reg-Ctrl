@@ -45,7 +45,7 @@ const MainCard = forwardRef(
       //color: "rgb(18, 25, 38)",
       fontFamily: "Poppins",
       lineHeight: 1.3,
-      fontWeight: 550,
+      fontWeight: 500,
     };
     return (
       <Card
