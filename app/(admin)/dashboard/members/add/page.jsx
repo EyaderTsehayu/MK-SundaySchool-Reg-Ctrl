@@ -1,16 +1,13 @@
 import { Typography } from "@mui/material";
 import MainCard from "@/components/cards/MainCard";
 import Breadcrumb from "@/components/cards/Breadcrumb";
+import RegistrationStepper from "@/components/forms/registration/RegisterationForm";
 const page = () => {
   return (
     <div>
-      <Breadcrumb />
-      <MainCard title="Members Registration">
-        <Typography>registration</Typography>
-        <Typography>registration</Typography>
-        <Typography>registration</Typography>
-        <Typography>registration</Typography>
-        <Typography>registration</Typography>
+      <Breadcrumb path={"Register"} brtitle={"Member's Registration"} />
+      <MainCard title="Registration Form">
+        <RegistrationStepper />
       </MainCard>
     </div>
   );
