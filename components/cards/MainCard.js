@@ -41,7 +41,7 @@ const MainCard = forwardRef(
 
     const titleStyle = {
       fontSize: "1.45rem",
-      color: "#351478",
+      color: "#0033cc",
       //color: "rgb(18, 25, 38)",
       fontFamily: "Poppins",
       lineHeight: 1.3,

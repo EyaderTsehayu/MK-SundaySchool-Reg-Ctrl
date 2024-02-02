@@ -39,7 +39,7 @@ const titleCont = {
 const title = {
   //margin: 0px;
   fontSize: "1.25rem",
-  color: "#351478",
+  color: "#0033cc",
   //color: "rgb(18, 25, 38)",
   fontFamily: "Poppins",
   lineHeight: 1.167,
@@ -76,8 +76,12 @@ export default function Breadcrumb({ brtitle, path }) {
               </Link>
 
               <Typography
-                sx={{ display: "flex", alignItems: "center" }}
-                color="text.primary"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  fontFamily: "Poppins",
+                }}
+                color="#0033cc"
               >
                 {path}
               </Typography>
