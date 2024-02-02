@@ -99,7 +99,7 @@ export default function RegistrationStepper() {
             <Typography
               sx={{
                 fontFamily: "Poppins",
-                color: "#351478",
+                color: "#0033cc",
 
                 fontSize: 16,
                 mb: 2,
@@ -113,7 +113,7 @@ export default function RegistrationStepper() {
             <Typography
               sx={{
                 fontFamily: "Poppins",
-                color: "#351478",
+                color: "#0033cc",
 
                 fontSize: 16,
                 mb: 2,
@@ -127,7 +127,7 @@ export default function RegistrationStepper() {
             <Typography
               sx={{
                 fontFamily: "Poppins",
-                color: "#351478",
+                color: "#0033cc",
 
                 fontSize: 16,
                 mb: 2,
