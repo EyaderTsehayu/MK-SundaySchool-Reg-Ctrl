@@ -1,183 +1,171 @@
 "use client";
-import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { Fragment, useState } from "react";
-import PersonalInformationForm from "./PersonalInformationForm";
-import AdditionalInformationForm from "./AdditionalInformationForm";
-import GuardianInformationForm from "./GuardianInformationForm";
+import { Grid, TextField } from "@mui/material";
+import { Formik } from "formik";
+import * as yup from "yup";
+import InputField from "./InputField";
+import MultiStepForm, { FormStep } from "./MultiStepForm";
 
-const steps = [
-  "Personal Information",
-  "Additional Information",
-  "Parent/Guardian Information",
-];
+const personalInfoValidation = yup.object().shape({
+  firstName: yup.string().required("First Name is required"),
+  middleName: yup.string().required("Middle Name is required"),
+  lastName: yup.string().required("Last Name is required"),
+  holyName: yup.string().required("Holy Name is required"),
+  gender: yup.string().required("Gender is required"),
+  placeOfBirth: yup.string().required("Place Of Birth is required"),
+  holyFatherName: yup.string().required("Holy Father Name is required"),
+  batch: yup.string().required("Batch is required"),
+  department: yup.string().required("Department is required"),
+  division: yup.string().required("Division is required"),
+  status: yup.string().required("Status is required"),
+  town: yup.string().required("town is required"),
+});
 
-export default function RegistrationStepper() {
-  const [activeStep, setActiveStep] = useState(0);
-  const [skipped, setSkipped] = useState(new Set());
-  const [formData, setFormData] = useState({
-    personalInformation: {},
-    additionalInformation: {},
-    guardianInformation: {},
-  });
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
-  };
+const additionalInfoValidation = yup.object().shape({
+  phoneNumber: yup.string().required("phone Number is required"),
+  address: yup.string().required("Address is required"),
+  kebele: yup.string().required("kebele is required"),
+  houseNumber: yup.string().required("House Number is required"),
+  workCondition: yup.string().required("work Condition is required"),
+  offficeName: yup.string().required("Offfice Name is required"),
+  additionalFile: yup.string().required("Additional File is required"),
+  bio: yup.string().required("Bio is required"),
+});
 
-  const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
+const guardianInfoValidation = yup.object().shape({
+  guardianName: yup.string().required("Guardian Name is required"),
+  parentPhoneNumber: yup.string().required("Parent Phone Number is required"),
+});
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
-  };
+const initialValues = {
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  holyName: "",
+  town: "",
+  gender: "",
+  placeOfBirth: "",
+  holyFatherName: "",
+  batch: "",
+  department: "",
+  division: "",
+  status: "",
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+  phoneNumber: "",
+  address: "",
+  kebele: "",
+  houseNumber: "",
+  workCondition: "",
+  offficeName: "",
+  additionalFile: "",
+  bio: "",
 
-  const handleReset = () => {
-    setActiveStep(0);
-    setFormData({
-      personalInformation: {},
-      additionalInformation: {},
-      guardianInformation: {},
-    });
-  };
+  guardianName: "",
+  parentPhoneNumber: "",
+};
 
-  // Define a function to update form data based on step
-  const updateFormData = (step, data) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [step]: data,
-    }));
-  };
-
+const RegisterationForm = () => {
   return (
-    <Box sx={{ width: "80%", margin: "0 auto" }}>
-      <Stepper activeStep={activeStep} sx={{ mb: 3, mt: 2 }}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>
-                <Typography sx={{ fontFamily: "Poppins", fontSize: 14 }}>
-                  {" "}
-                  {label}
-                </Typography>
-              </StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-
-      {activeStep === steps.length ? (
-        <Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
-        </Fragment>
-      ) : (
-        <Fragment>
-          {activeStep === 0 && (
-            <Typography
-              sx={{
-                fontFamily: "Poppins",
-                color: "#0033cc",
-
-                fontSize: 16,
-                mb: 2,
-                fontWeight: "bold",
-              }}
-            >
-              Personal Information
-            </Typography>
+    <div>
+      {" "}
+      <MultiStepForm
+        initialValues={initialValues}
+        onSubmit={(values) => {
+          alert(JSON.stringify(values, null, 2));
+        }}
+        //  validationSchema={validationSchema}
+      >
+        <FormStep validationSchema={personalInfoValidation}>
+          {(formik) => (
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="firstName" label="First Name" />
+              </Grid>
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="middleName" label="Middle Name" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="lastName" label="Last Name" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="holyName" label="Holy Name" />
+              </Grid>
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="town" label="Town" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="gender" label="Gender" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="placeOfBirth" label="Place Of Birth" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                {" "}
+                <InputField name="holyFatherName" label="Holy Father's Name" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                {" "}
+                <InputField name="batch" label="Batch" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="department" label="Department" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="division" label="Division" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="status" label="Status" />
+              </Grid>
+            </Grid>
           )}
-          {activeStep === 1 && (
-            <Typography
-              sx={{
-                fontFamily: "Poppins",
-                color: "#0033cc",
-
-                fontSize: 16,
-                mb: 2,
-                fontWeight: "bold",
-              }}
-            >
-              Additional Information
-            </Typography>
+        </FormStep>
+        <FormStep validationSchema={additionalInfoValidation}>
+          {(formik) => (
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="phoneNumber" label="Phone Number" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="address" label="Current Address" />
+              </Grid>
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="kebele" label="Kebele" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="houseNumber" label="House Number" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="workCondition" label="Work Condition" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="offficeName" label="Office/School Name" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6}>
+                <InputField name="additionalFile" label="Additional Files" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6}>
+                <InputField name="bio" label="Bio" />
+              </Grid>
+            </Grid>
           )}
-          {activeStep === 2 && (
-            <Typography
-              sx={{
-                fontFamily: "Poppins",
-                color: "#0033cc",
-
-                fontSize: 16,
-                mb: 2,
-                fontWeight: "bold",
-              }}
-            >
-              Parent/Guardian Information
-            </Typography>
+        </FormStep>
+        <FormStep validationSchema={guardianInfoValidation}>
+          {(formik) => (
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={6}>
+                <InputField
+                  name="guardianName"
+                  label="Parent/Guardian's Name"
+                />
+              </Grid>{" "}
+              <Grid item xs={12} md={6}>
+                <InputField name="parentPhoneNumber" label="Phone Number" />
+              </Grid>
+            </Grid>
           )}
-          {/* Render the appropriate form based on the active step */}
-          {activeStep === 0 && (
-            <PersonalInformationForm
-              formData={formData.personalInformation}
-              updateFormData={(data) =>
-                updateFormData("personalInformation", data)
-              }
-            />
-          )}
-          {activeStep === 1 && (
-            <AdditionalInformationForm
-              formData={formData.additionalInformation}
-              updateFormData={(data) =>
-                updateFormData("additionalInformation", data)
-              }
-            />
-          )}
-          {activeStep === 2 && (
-            <GuardianInformationForm
-              formData={formData.guardianInformation}
-              updateFormData={(data) =>
-                updateFormData("guardianInformation", data)
-              }
-            />
-          )}
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Button
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back
-            </Button>
-            <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? "Finish" : "Next"}
-            </Button>
-          </Box>
-        </Fragment>
-      )}
-    </Box>
+        </FormStep>
+      </MultiStepForm>
+    </div>
   );
-}
+};
+
+export default RegisterationForm;
