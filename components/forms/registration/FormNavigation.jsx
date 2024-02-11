@@ -14,7 +14,6 @@ const FormNavigation = (props) => {
         <Button
           variant="contained"
           onClick={props.onBackClick}
-          type="submit"
           style={{
             backgroundColor: "#9c27b0",
             color: "white",
