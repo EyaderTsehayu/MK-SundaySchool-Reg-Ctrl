@@ -1,54 +1,20 @@
 "use client";
 import { Grid, TextField } from "@mui/material";
-import { Formik } from "formik";
+import { Field, Formik } from "formik";
 import * as yup from "yup";
+import { CldUploadWidget } from "next-cloudinary";
+
 import InputField from "./InputField";
 import DropdownField from "./DropDownField";
 import DatePickerField from "./DatePickerField";
 import MultiStepForm, { FormStep } from "./MultiStepForm";
-
-const personalInfoValidation = yup.object().shape({
-  firstName: yup.string().required("First Name is required"),
-  middleName: yup.string().required("Middle Name is required"),
-  lastName: yup.string().required("Last Name is required"),
-  holyName: yup.string().required("Holy Name is required"),
-  gender: yup.string().required("Gender is required"),
-  placeOfBirth: yup.string().required("Place Of Birth is required"),
-  dateOfBirth: yup
-    .date("Invalid date")
-    .required("Date of Birth is required")
-    .max(new Date(), "Date of Birth must be in the past")
-    .test(
-      "age",
-      "Age must be greater than 4 years",
-      (value) => value && new Date().getFullYear() - value.getFullYear() > 4
-    ), // Assuming the date of birth cannot be in the future
-  holyFatherName: yup.string().required("Holy Father Name is required"),
-  batch: yup.string().required("Batch is required"),
-  department: yup.string().required("Department is required"),
-  division: yup.string().required("Division is required"),
-  status: yup.string().required("Status is required"),
-  town: yup.string().required("town is required"),
-});
-
-const additionalInfoValidation = yup.object().shape({
-  phoneNumber: yup.string().required("phone Number is required"),
-  address: yup.string().required("Address is required"),
-  kebele: yup.string().required("kebele is required"),
-  houseNumber: yup.string().required("House Number is required"),
-  workCondition: yup.string().required("work Condition is required"),
-  offficeName: yup.string().required("Offfice Name is required"),
-
-  //  additionalFile: yup.string().required("Additional File is required"),
-  // bio: yup.string().required("Bio is required"),
-});
-
-const guardianInfoValidation = yup.object().shape({
-  guardianName: yup.string().required("Guardian Name is required"),
-  parentPhoneNumber: yup.string().required("Parent Phone Number is required"),
-});
+import { personalInfoValidation } from "@/utils/validation";
+import { additionalInfoValidation } from "@/utils/validation";
+import { guardianInfoValidation } from "@/utils/validation";
 
 const initialValues = {
+  memberId: "",
+  profilePic: null,
   firstName: "",
   middleName: "",
   lastName: "",
@@ -58,7 +24,7 @@ const initialValues = {
   placeOfBirth: "",
   dateOfBirth: "",
   holyFatherName: "",
-  batch: "",
+  dateOfJoining: "",
   department: "",
   division: "",
   status: "",
@@ -75,6 +41,66 @@ const initialValues = {
   guardianName: "",
   parentPhoneNumber: "",
 };
+const handleSubmit = async (values, actions) => {
+  console.log("Values", values.profilePic);
+
+  const image = values.profilePic;
+  const formData = new FormData();
+  formData.append("file", image);
+  formData.append("upload_preset", "mkss_pro_pic");
+  const uploadResponse = await fetch(
+    "https://api.cloudinary.com/v1_1/dqavpwzbn/image/upload",
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+  const uploadedImageData = await uploadResponse.json();
+  const imageUrl = uploadedImageData.secure_url;
+  // console.log("image url", imageUrl);
+  //alert(JSON.stringify(values, null, 2));
+  if (imageUrl !== null) {
+    try {
+      const response = await fetch("/api/member/new", {
+        method: "POST",
+        body: JSON.stringify({
+          firstName: values.firstName,
+          middleName: values.middleName,
+          lastName: values.lastName,
+          profilePicture: imageUrl,
+          memberId: values.memberId,
+          holyName: values.holyName,
+          town: values.town,
+          gender: values.gender,
+          placeOfBirth: values.placeOfBirth,
+          dateOfBirth: values.dateOfBirth,
+          holyFatherName: values.holyFatherName,
+          dateOfJoining: values.dateOfJoining,
+          department: values.department,
+          division: values.division,
+          status: values.status,
+          phoneNumber: values.phoneNumber,
+          address: values.address,
+          kebele: values.kebele,
+          houseNumber: values.houseNumber,
+          workCondition: values.workCondition,
+          offficeName: values.offficeName,
+          additionalFile: values.additionalFile,
+          bio: values.bio,
+          guardianName: values.guardianName,
+          parentPhoneNumber: values.parentPhoneNumber,
+        }),
+      });
+      if (response.ok) {
+        //  router.push("/");
+        console.log("registration successful");
+        actions.resetForm();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
 
 const RegisterationForm = () => {
   return (
@@ -82,9 +108,7 @@ const RegisterationForm = () => {
       {" "}
       <MultiStepForm
         initialValues={initialValues}
-        onSubmit={(values) => {
-          alert(JSON.stringify(values, null, 2));
-        }}
+        onSubmit={handleSubmit}
         //  validationSchema={validationSchema}
       >
         <FormStep validationSchema={personalInfoValidation}>
@@ -100,26 +124,61 @@ const RegisterationForm = () => {
                 <InputField name="lastName" label="Last Name" />
               </Grid>{" "}
               <Grid item xs={12} md={6} lg={4}>
-                <InputField name="holyName" label="Holy Name" />
-              </Grid>
-              <Grid item xs={12} md={6} lg={4}>
-                <InputField name="town" label="Town" />
+                <InputField name="memberId" label="Member Id" />
               </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                <div>
+                  <label
+                    htmlFor="file_input"
+                    className="p-3.5 block text-sm text-gray-200 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-white dark:border-gray-300 dark:placeholder-blue-100"
+                  >
+                    {formik.values.profilePic != null ? (
+                      <p className="mt-1 text-sm text-gray-500 dark:text-gray-600">
+                        {formik.values.profilePic.name}
+                      </p>
+                    ) : (
+                      <p
+                        class="mt-1 text-sm text-gray-500 dark:text-gray-500"
+                        id="file_input_help"
+                      >
+                        Upload member's picture. PNG or JPG (MAX. 1Mb).
+                      </p>
+                    )}
+                    <input
+                      type="file"
+                      id="file_input"
+                      className="hidden"
+                      onChange={(event) => {
+                        formik.setFieldValue(
+                          "profilePic",
+                          event.target.files[0]
+                        );
+                      }}
+                    />
+                  </label>
+                </div>
+              </Grid>
               <Grid item xs={12} md={6} lg={4}>
                 <DropdownField
                   name="gender"
                   label="Gender"
                   options={[
-                    { value: "male", label: "Male" },
-                    { value: "female", label: "Female" },
+                    { value: "Male", label: "Male" },
+                    { value: "Female", label: "Female" },
                   ]}
                 />
+              </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                <DatePickerField name="dateOfBirth" label="Date of Birth" />
               </Grid>{" "}
               <Grid item xs={12} md={6} lg={4}>
                 <InputField name="placeOfBirth" label="Place Of Birth" />
               </Grid>{" "}
               <Grid item xs={12} md={6} lg={4}>
-                <DatePickerField name="dateOfBirth" label="Date of Birth" />
+                <InputField name="town" label="Town" />
+              </Grid>{" "}
+              <Grid item xs={12} md={6} lg={4}>
+                <InputField name="holyName" label="Holy Name" />
               </Grid>{" "}
               <Grid item xs={12} md={6} lg={4}>
                 {" "}
@@ -127,17 +186,24 @@ const RegisterationForm = () => {
               </Grid>{" "}
               <Grid item xs={12} md={6} lg={4}>
                 {" "}
-                <InputField name="batch" label="Batch" />
+                {/* <InputField name="dateOfJoining" label="dateOfJoining" /> */}
+                <DatePickerField name="dateOfJoining" label="Date Of Joining" />
               </Grid>{" "}
+            </Grid>
+          )}
+        </FormStep>
+        <FormStep validationSchema={additionalInfoValidation}>
+          {(formik) => (
+            <Grid container spacing={2}>
               <Grid item xs={12} md={6} lg={4}>
                 <DropdownField
                   name="department"
                   label="Department"
                   options={[
-                    { value: "hymn", label: "Hymn" },
-                    { value: "education", label: "Education" },
+                    { value: "Hymn", label: "Hymn" },
+                    { value: "Education", label: "Education" },
                     {
-                      value: "artsAndLiterature",
+                      value: "Arts And Literature",
                       label: "Arts And Literature",
                     },
                     // Add more options as needed
@@ -149,9 +215,9 @@ const RegisterationForm = () => {
                   name="division"
                   label="Division"
                   options={[
-                    { value: "youth", label: "Youth" },
-                    { value: "johnTheBaptist", label: "John The Baptist" },
-                    { value: "kidSamuel", label: "kid Samuel" },
+                    { value: "Youth", label: "Youth" },
+                    { value: "John The Baptist", label: "John The Baptist" },
+                    { value: "Kid Samuel", label: "kid Samuel" },
                     // Add more options as needed
                   ]}
                 />
@@ -161,19 +227,13 @@ const RegisterationForm = () => {
                   name="status"
                   label="Status"
                   options={[
-                    { value: "active", label: "Active" },
-                    { value: "stalled", label: "Stalled" },
-                    { value: "lost", label: "Lost" },
+                    { value: "Active", label: "Active" },
+                    { value: "Stalled", label: "Stalled" },
+                    { value: "Lost", label: "Lost" },
                     // Add more options as needed
                   ]}
                 />
               </Grid>
-            </Grid>
-          )}
-        </FormStep>
-        <FormStep validationSchema={additionalInfoValidation}>
-          {(formik) => (
-            <Grid container spacing={2}>
               <Grid item xs={12} md={6} lg={4}>
                 <InputField name="phoneNumber" label="Phone Number" />
               </Grid>{" "}
@@ -193,19 +253,19 @@ const RegisterationForm = () => {
                   options={[
                     { value: "student", label: "Student" },
                     {
-                      value: "civilServant",
+                      value: "Civil Servant",
                       label: "Civil Servant",
                     },
                     {
-                      value: "privateEmployee",
+                      value: "Private Employee",
                       label: "Private Employee",
                     },
                     {
-                      value: "businessOwner",
+                      value: "Business Owner",
                       label: "Business Owner",
                     },
                     {
-                      value: "ngoEmployee",
+                      value: "Ngo Employee",
                       label: "NGO Employee",
                     },
 
