@@ -157,17 +157,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         {
           text: <Typography sx={itemTextStyle}>Youth</Typography>,
           icon: <Person3Icon sx={{ fontSize: "20px", color: "#351478" }} />,
-          path: "teachers",
+          path: "/dashboard/youth",
         },
         {
           text: <Typography sx={itemTextStyle}>Jhon The Baptist</Typography>,
           icon: <Person4Icon sx={{ fontSize: "18px", color: "#351478" }} />,
-          path: "clubs",
+          path: "/dashboard/jhonthebaptist",
         },
         {
           text: <Typography sx={itemTextStyle}>Kid Samuel</Typography>,
           icon: <ChildCareIcon sx={{ fontSize: "20px", color: "#351478" }} />,
-          path: "students",
+          path: "/dashboard/kidsamuel",
         },
       ],
 
