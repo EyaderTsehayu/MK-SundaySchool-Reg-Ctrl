@@ -1,14 +1,18 @@
 "use client";
-import { useState } from "react";
-import { Typography } from "@mui/material";
+import { useState, useEffect } from "react";
 import MainCard from "@/components/cards/MainCard";
 import Breadcrumb from "@/components/cards/Breadcrumb";
-import RegistrationStepper from "@/components/forms/registration/RegisterationForm";
-import Table from "@/components/tabel/Table";
+import Table from "@/components/table/Table";
+
 const page = () => {
+  const [members, setMembers] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [searchTimeout, setSearchTimeout] = useState(null);
+  const [searchedResults, setSearchedResults] = useState([]);
+
   const columns = [
     {
-      field: "id",
+      field: "memberId",
       headerName: "ID",
       width: 100,
     },
@@ -22,38 +26,68 @@ const page = () => {
         `${params.row.firstName || ""} ${params.row.lastName || ""}`,
     },
     {
-      field: "firstName",
+      field: "gender",
+      headerName: "Gender",
+      width: 100,
+    },
+    {
+      field: "department",
       headerName: "Department",
       width: 200,
     },
     {
-      field: "lastName",
+      field: "division",
       headerName: "Devision",
       width: 200,
     },
     {
-      field: "age",
+      field: "phoneNumber",
+      headerName: "Phone Number",
+      width: 200,
+    },
+    {
+      field: "status",
       headerName: "Status",
-      //  type: "number",
       width: 200,
     },
   ];
 
-  let rows = [
-    { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-    { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-    { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-    { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-    { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-    { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-    { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-    { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-    { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  ];
+  const filterPrompts = (searchtext) => {
+    const regex = new RegExp(searchtext, "i"); // case insensetive flag
+    return members.filter(
+      (item) =>
+        regex.test(item.memberId) ||
+        regex.test(item.fullName) ||
+        regex.test(item.department) ||
+        regex.test(item.status) ||
+        regex.test(item.division)
+    );
+  };
+  const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout);
+    setSearchText(e.target.value);
+
+    // debounce method
+    setSearchTimeout(
+      setTimeout(() => {
+        const searchResult = filterPrompts(e.target.value);
+        setSearchedResults(searchResult);
+      }, 500)
+    );
+  };
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      const response = await fetch("/api/member");
+      const data = await response.json();
+      setMembers(data);
+    };
+    fetchMembers();
+  }, []);
 
   return (
     <div>
-      <Breadcrumb path={"Members"} brtitle={"Member's information"} />
+      <Breadcrumb path={"Members"} brtitle={"Member's Information"} />
 
       <MainCard>
         <div className="flex w-full justify-between items-center mb-4">
@@ -61,9 +95,9 @@ const page = () => {
             <input
               type="text"
               placeholder="Search here ..."
-              //  value={searchTerm}
-              //  onChange={handleSearch}
-              className=" w-full hidden sm:block px-4 py-2 rounded-md  border border-stroke bg-gray  text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+              value={searchText}
+              onChange={handleSearchChange}
+              className=" w-full hidden sm:block px-4 py-2 rounded-md  border border-stroke bg-gray  text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4  dark:focus:border-primary"
             />
           </div>
 
@@ -77,11 +111,11 @@ const page = () => {
             </button>
           </div>
         </div>
-        <Table
-          columns={columns}
-          rows={rows}
-          // setSelectedRows={setSelectedRows}
-        />
+        {searchText ? (
+          <Table columns={columns} rows={searchedResults} />
+        ) : (
+          <Table columns={columns} rows={members} />
+        )}
       </MainCard>
     </div>
   );
