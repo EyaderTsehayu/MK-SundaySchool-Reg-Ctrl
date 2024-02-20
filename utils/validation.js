@@ -21,7 +21,7 @@ export const personalInfoValidation = yup.object().shape({
   dateOfJoining: yup
     .date("Invalid date")
     .required("Date Of Joining is required")
-    .max(new Date(), "Date of Birth must be in the past"),
+    .max(new Date(), "Date of Joining must be in the past"),
 
   town: yup.string().required("Town is required"),
 });
@@ -35,7 +35,7 @@ export const additionalInfoValidation = yup.object().shape({
   kebele: yup.string().required("kebele is required"),
   houseNumber: yup.string().required("House Number is required"),
   workCondition: yup.string().required("work Condition is required"),
-  offficeName: yup.string().required("Offfice Name is required"),
+  officeName: yup.string().required("Offfice Name is required"),
 
   //  additionalFile: yup.string().required("Additional File is required"),
   // bio: yup.string().required("Bio is required"),

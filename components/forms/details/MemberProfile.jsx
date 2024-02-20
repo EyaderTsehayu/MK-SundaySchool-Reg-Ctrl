@@ -112,12 +112,12 @@ const MemberProfile = ({ onSubmit, initialValues }) => {
             </Grid>{" "}
             <Grid item xs={12} md={6}>
               <TextField
-                id="profilePic"
+                id="profilePicture"
                 label="Profile Picture"
                 variant="outlined"
                 fullWidth
                 margin="normal"
-                {...formik.getFieldProps("profilePic")}
+                {...formik.getFieldProps("profilePicture")}
                 error={
                   formik.touched.profilePic && Boolean(formik.errors.profilePic)
                 }

@@ -11,6 +11,7 @@ import MultiStepForm, { FormStep } from "./MultiStepForm";
 import { personalInfoValidation } from "@/utils/validation";
 import { additionalInfoValidation } from "@/utils/validation";
 import { guardianInfoValidation } from "@/utils/validation";
+import { toast } from "react-toastify";
 
 const initialValues = {
   memberId: "",
@@ -34,7 +35,7 @@ const initialValues = {
   kebele: "",
   houseNumber: "",
   workCondition: "",
-  offficeName: "",
+  officeName: "",
   additionalFile: "",
   bio: "",
 
@@ -84,7 +85,7 @@ const handleSubmit = async (values, actions) => {
           kebele: values.kebele,
           houseNumber: values.houseNumber,
           workCondition: values.workCondition,
-          offficeName: values.offficeName,
+          officeName: values.officeName,
           additionalFile: values.additionalFile,
           bio: values.bio,
           guardianName: values.guardianName,
@@ -93,7 +94,7 @@ const handleSubmit = async (values, actions) => {
       });
       if (response.ok) {
         //  router.push("/");
-        console.log("registration successful");
+        toast.success("Successfully regsitered");
         actions.resetForm();
       }
     } catch (error) {
@@ -274,7 +275,7 @@ const RegisterationForm = () => {
                 />
               </Grid>{" "}
               <Grid item xs={12} md={6} lg={4}>
-                <InputField name="offficeName" label="Office/School Name" />
+                <InputField name="officeName" label="Office/School Name" />
               </Grid>{" "}
               <Grid item xs={12} md={6}>
                 <InputField name="additionalFile" label="Additional Files" />

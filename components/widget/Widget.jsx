@@ -1,16 +1,19 @@
 import "./widget.scss";
 import SchoolIcon from "@mui/icons-material/School";
 import CastForEducationIcon from "@mui/icons-material/CastForEducation";
+import ManOutlinedIcon from "@mui/icons-material/ManOutlined";
+import Woman2TwoToneIcon from "@mui/icons-material/Woman2TwoTone";
+import Groups2Icon from "@mui/icons-material/Groups2";
 
-export const Students = () => {
+export const Students = ({ count }) => {
   return (
     <div className="student-card card">
       <div className="left">
         <div className="right">
-          <SchoolIcon className="icon" />
+          <Groups2Icon sx={{ fontSize: "45px" }} className="icon" />
         </div>
-        <span className="counter">2323</span>
-        <span className="title">Student</span>
+        <span className="counter">{count}</span>
+        <span className="title">Total members</span>
       </div>
 
       <div className="backCircle"></div>
@@ -26,8 +29,8 @@ export const Teachers = () => {
         <div className="right">
           <CastForEducationIcon className="icon" />
         </div>
-        <span className="counter">213</span>
-        <span className="title">Teacher</span>
+        <span className="counter">14</span>
+        <span className="title">Department</span>
       </div>
 
       <div className="backCircle"></div>
@@ -36,15 +39,15 @@ export const Teachers = () => {
   );
 };
 
-export const MaleStudents = () => {
+export const MaleStudents = ({ count }) => {
   return (
     <div className="male-student-card card">
       <div className="left">
-        <SchoolIcon className="icon" />
+        <ManOutlinedIcon sx={{ fontSize: "50px" }} className="icon" />
       </div>
       <div className="right">
-        <span className="counter">1234</span>
-        <span className="title">Male Students</span>
+        <span className="counter">{count}</span>
+        <span className="title">Male Members</span>
       </div>
 
       <div className="backCircle"></div>
@@ -53,15 +56,15 @@ export const MaleStudents = () => {
   );
 };
 
-export const FemaleStudents = () => {
+export const FemaleStudents = ({ count }) => {
   return (
     <div className="female-student-card card">
       <div className="left">
-        <SchoolIcon className="icon" />
+        <Woman2TwoToneIcon sx={{ fontSize: "50px" }} className="icon" />
       </div>
       <div className="right">
-        <span className="counter">1234</span>
-        <span className="title">Female Students</span>
+        <span className="counter">{count}</span>
+        <span className="title">Female Members</span>
       </div>
       <div className="backCircle"></div>
       <div className="frontCirle"></div>

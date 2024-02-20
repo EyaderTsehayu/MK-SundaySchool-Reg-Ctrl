@@ -85,7 +85,7 @@ const MemberSchema = new Schema({
     type: String,
     required: [true, "Work Condition is required."],
   },
-  offficeName: {
+  officeName: {
     type: String,
     required: [true, "Offfice Name is required."],
   },

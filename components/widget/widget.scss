@@ -167,12 +167,13 @@
   .right {
     display: flex;
     flex-direction: column;
-    margin-top: 7px;
+    // margin-top: 7px;
 
     .title {
       font-weight: bold;
       font-size: 14px;
-      color: #90caf9;
+      color: #fff;
+      font-family: "Poppins";
     }
 
     .counter {
@@ -182,12 +183,9 @@
     }
 
     .icon {
-      width: 40px;
-      height: 40px;
-      font-size: 15px;
       padding: 10px;
       margin-top: 15px;
-      margin-right: 10px;
+      margin-right: 20px;
       border-radius: 10px;
       cursor: pointer;
       background-color: #1565c0;
@@ -237,27 +235,25 @@
   .right {
     display: flex;
     flex-direction: column;
-    margin-top: 7px;
+    //  margin-top: 7px;
 
     .title {
       font-weight: bold;
       font-size: 14px;
-      color: #838080;
+      color: #1e88e5;
+      font-family: "Poppins";
     }
 
     .counter {
       font-size: 28px;
       font-weight: 500;
-      color: #000;
+      color: #838080;
     }
 
     .icon {
-      width: 40px;
-      height: 40px;
-      font-size: 15px;
       padding: 10px;
       margin-top: 11px;
-      margin-right: 10px;
+      margin-right: 20px;
       border-radius: 10px;
       cursor: pointer;
       background-color: #fff8e1;

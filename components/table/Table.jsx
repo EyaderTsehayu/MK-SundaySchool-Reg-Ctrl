@@ -19,7 +19,7 @@ const Table = ({ columns, rows }) => {
   const handleRowClick = (param) => {
     const selectedRowId = param.row._id;
     // Navigate to the details page with the selected row's ID
-    router.push(`members/details/${selectedRowId}`);
+    router.push(`members/details?id=${selectedRowId}`);
   };
 
   function CustomToolbar() {
