@@ -9,16 +9,43 @@ import {
 
 import Chart from "@/components/chart/Chart";
 import Featured from "@/components/featured/Featured";
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
+  const [members, setMembers] = useState(null);
+
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        const response = await fetch("/api/dashboard/cards");
+        const data = await response.json();
+        // console.log("data in dashboard widget", data);
+        setMembers(data);
+      } catch (error) {
+        console.error("Error fetching member statistics:", error);
+      }
+    };
+    fetchMembers();
+  }, []);
+
+  console.log("members in dashboard main page", members);
+
+  if (members === null) {
+    // Loading state or you can show a loading spinner
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
-      <Box>Dashboard</Box>
       <Box>
         <Box>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6} md={6} lg={4}>
-              <Students type="student" className="card" />
+              <Students
+                count={members.totalMembers}
+                type="student"
+                className="card"
+              />
             </Grid>
             <Grid item xs={12} sm={6} md={6} lg={4}>
               <Teachers type="teacher" className="card" />
@@ -28,10 +55,18 @@ const Dashboard = () => {
               <Box>
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6} md={6} lg={12}>
-                    <MaleStudents type="module" className="card" />
+                    <MaleStudents
+                      count={members.maleMembers}
+                      type="module"
+                      className="card"
+                    />
                   </Grid>
                   <Grid item xs={12} sm={6} md={6} lg={12}>
-                    <FemaleStudents type="module" className="card" />
+                    <FemaleStudents
+                      count={members.femaleMembers}
+                      type="module"
+                      className="card"
+                    />
                   </Grid>
                 </Grid>
               </Box>

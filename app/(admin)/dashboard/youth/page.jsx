@@ -3,54 +3,13 @@ import { useState, useEffect } from "react";
 import MainCard from "@/components/cards/MainCard";
 import Breadcrumb from "@/components/cards/Breadcrumb";
 import Table from "@/components/table/Table";
+import { columns } from "@/utils/columns";
 
 const Youth = () => {
   const [members, setMembers] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
-
-  const columns = [
-    {
-      field: "memberId",
-      headerName: "ID",
-      width: 100,
-    },
-    {
-      field: "fullName",
-      headerName: "Full name",
-      description: "This column has a value getter and is not sortable.",
-      sortable: false,
-      width: 200,
-      valueGetter: (params) =>
-        `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-    },
-    {
-      field: "gender",
-      headerName: "Gender",
-      width: 100,
-    },
-    {
-      field: "department",
-      headerName: "Department",
-      width: 200,
-    },
-    {
-      field: "division",
-      headerName: "Devision",
-      width: 200,
-    },
-    {
-      field: "phoneNumber",
-      headerName: "Phone Number",
-      width: 200,
-    },
-    {
-      field: "status",
-      headerName: "Status",
-      width: 200,
-    },
-  ];
 
   const filterPrompts = (searchtext) => {
     const regex = new RegExp(searchtext, "i"); // case insensetive flag
