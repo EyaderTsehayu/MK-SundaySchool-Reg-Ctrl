@@ -10,6 +10,7 @@ const JhonTheBaptist = () => {
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
+  const [rowSelectionModel, setRowSelectionModel] = useState([]);
 
   const filterPrompts = (searchtext) => {
     const regex = new RegExp(searchtext, "i"); // case insensetive flag
@@ -44,6 +45,10 @@ const JhonTheBaptist = () => {
     fetchMembers();
   }, []);
 
+  const receiveDataFromTable = (data) => {
+    setRowSelectionModel(data);
+    //console.log("selected rows from jhon baptist", rowSelectionModel);
+  };
   return (
     <div>
       <Breadcrumb
@@ -74,9 +79,17 @@ const JhonTheBaptist = () => {
           </div>
         </div>
         {searchText ? (
-          <Table columns={columns} rows={searchedResults} />
+          <Table
+            columns={columns}
+            rows={searchedResults}
+            sendDataToDevision={receiveDataFromTable}
+          />
         ) : (
-          <Table columns={columns} rows={members} />
+          <Table
+            columns={columns}
+            rows={members}
+            sendDataToDevision={receiveDataFromTable}
+          />
         )}
       </MainCard>
     </div>
