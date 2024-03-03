@@ -54,10 +54,21 @@ export const columns = [
             borderRadius: "10px",
           };
           break;
-        case "Stalled":
+        case "Warning":
           statusStyle = {
             color: "white",
             backgroundColor: "#F4CE14",
+            paddingLeft: "14px",
+            paddingRight: "14px",
+            paddingTop: "4px",
+            paddingBottom: "4px",
+            borderRadius: "10px",
+          };
+          break;
+        case "Stalled":
+          statusStyle = {
+            color: "white",
+            backgroundColor: "#957777",
             paddingLeft: "14px",
             paddingRight: "14px",
             paddingTop: "4px",
