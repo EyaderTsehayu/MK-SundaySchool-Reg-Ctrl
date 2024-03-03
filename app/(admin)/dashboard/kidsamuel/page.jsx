@@ -10,6 +10,7 @@ const KidSamuel = () => {
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
+  const [rowSelectionModel, setRowSelectionModel] = useState([]);
 
   const filterPrompts = (searchtext) => {
     const regex = new RegExp(searchtext, "i"); // case insensetive flag
@@ -43,7 +44,32 @@ const KidSamuel = () => {
     };
     fetchMembers();
   }, []);
+  const handleEnroll = async () => {
+    if (rowSelectionModel != null) {
+      //console.log("selected rows from kid samuel", rowSelectionModel);
+      try {
+        const response = await fetch("/api/member/details/enroll", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ rowSelectionModel }),
+        });
 
+        if (response.ok) {
+          console.log("Data updated successfully!");
+        } else {
+          console.error("Failed to update data.");
+        }
+      } catch (error) {
+        console.error("Error updating data:", error);
+      }
+    }
+  };
+  const receiveDataFromTable = (data) => {
+    setRowSelectionModel(data);
+    //  console.log("selected rows from kid samuel", rowSelectionModel);
+  };
   return (
     <div>
       <Breadcrumb path={"Kid Samuel"} brtitle={"Kid Samuel Division"} />
@@ -62,7 +88,7 @@ const KidSamuel = () => {
 
           <div className="flex gap-4 flex-inline  items-center rounded-md  p-1.5 ">
             <button
-              //  onClick={handleOpen}
+              onClick={handleEnroll}
               className="rounded-lg  bg-blue-700 items-end py-3 px-6 font-medium text-white  hover:bg-opacity-85"
               sx={{ fontFamily: "Popins" }}
             >
@@ -71,9 +97,17 @@ const KidSamuel = () => {
           </div>
         </div>
         {searchText ? (
-          <Table columns={columns} rows={searchedResults} />
+          <Table
+            columns={columns}
+            rows={searchedResults}
+            sendDataToDevision={receiveDataFromTable}
+          />
         ) : (
-          <Table columns={columns} rows={members} />
+          <Table
+            columns={columns}
+            rows={members}
+            sendDataToDevision={receiveDataFromTable}
+          />
         )}
       </MainCard>
     </div>
