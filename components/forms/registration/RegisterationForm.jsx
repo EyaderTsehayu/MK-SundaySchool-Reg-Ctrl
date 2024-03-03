@@ -229,8 +229,9 @@ const RegisterationForm = () => {
                   label="Status"
                   options={[
                     { value: "Active", label: "Active" },
-                    { value: "Stalled", label: "Stalled" },
+                    { value: "Warning", label: "Warning" },
                     { value: "Lost", label: "Lost" },
+                    { value: "Stalled", label: "Stalled" },
                     // Add more options as needed
                   ]}
                 />
@@ -252,7 +253,7 @@ const RegisterationForm = () => {
                   name="workCondition"
                   label="Work Condition"
                   options={[
-                    { value: "student", label: "Student" },
+                    { value: "Student", label: "Student" },
                     {
                       value: "Civil Servant",
                       label: "Civil Servant",
