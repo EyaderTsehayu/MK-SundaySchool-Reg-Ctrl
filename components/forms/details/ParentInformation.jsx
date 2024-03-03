@@ -16,7 +16,7 @@ const ParentInformation = ({ onSubmit, initialValues }) => {
 
   return (
     <div className="flex flex-col gap-2">
-      <ProfileHeader />
+      <ProfileHeader initialValues={initialValues} />
       <SubCard>
         {" "}
         <form onSubmit={formik.handleSubmit}>
@@ -58,7 +58,13 @@ const ParentInformation = ({ onSubmit, initialValues }) => {
             </Grid>
           </Grid>
 
-          <button type="submit">Save</button>
+          <button
+            className="rounded-lg mt-6 bg-blue-600 items-end py-2 px-6 font-medium text-white  hover:bg-opacity-95"
+            sx={{ fontFamily: "Popins" }}
+            type="submit"
+          >
+            Save
+          </button>
         </form>
       </SubCard>
     </div>

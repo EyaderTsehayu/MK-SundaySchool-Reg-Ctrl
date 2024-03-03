@@ -47,7 +47,7 @@ const MemberProfile = ({ onSubmit, initialValues }) => {
   return (
     <div className="flex flex-col gap-2">
       {" "}
-      <ProfileHeader />
+      <ProfileHeader initialValues={initialValues} />
       <SubCard>
         {" "}
         <form onSubmit={formik.handleSubmit}>
@@ -150,6 +150,7 @@ const MemberProfile = ({ onSubmit, initialValues }) => {
             <Grid item xs={12} md={6}>
               <TextField
                 id="dateOfBirth"
+                type="date"
                 label="Date of Birth"
                 variant="outlined"
                 fullWidth
@@ -227,6 +228,7 @@ const MemberProfile = ({ onSubmit, initialValues }) => {
             <Grid item xs={12} md={6}>
               <TextField
                 id="dateOfJoining"
+                type="date"
                 label="Date Of Joining"
                 variant="outlined"
                 fullWidth
@@ -243,7 +245,13 @@ const MemberProfile = ({ onSubmit, initialValues }) => {
             </Grid>{" "}
           </Grid>
 
-          <button type="submit">Save</button>
+          <button
+            className="rounded-lg mt-6 bg-blue-600 items-end py-2 px-6 font-medium text-white  hover:bg-opacity-95"
+            sx={{ fontFamily: "Popins" }}
+            type="submit"
+          >
+            Save
+          </button>
         </form>
       </SubCard>
     </div>

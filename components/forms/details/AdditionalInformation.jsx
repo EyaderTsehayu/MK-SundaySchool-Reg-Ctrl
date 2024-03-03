@@ -24,10 +24,10 @@ const AdditionalInformation = ({ onSubmit, initialValues }) => {
 
   const departments = ["Hymn", "Education", "Arts And Literature"];
   const divisions = ["Youth", "John The Baptist", "Kid Samuel"];
-  const statuses = ["Active", "Stalled", "Lost"];
+  const statuses = ["Active", "Warning", "Lost", "Stalled"];
 
   const workConditions = [
-    "student",
+    "Student",
     "Civil Servant",
     "Private Employee",
     "Business Owner",
@@ -56,7 +56,7 @@ const AdditionalInformation = ({ onSubmit, initialValues }) => {
   };
   return (
     <div className="flex flex-col gap-2">
-      <ProfileHeader />
+      <ProfileHeader initialValues={initialValues} />
       <SubCard>
         {" "}
         <form onSubmit={formik.handleSubmit}>
@@ -221,7 +221,13 @@ const AdditionalInformation = ({ onSubmit, initialValues }) => {
             </Grid>{" "}
           </Grid>
 
-          <button type="submit">Save</button>
+          <button
+            className="rounded-lg mt-6 bg-blue-600 items-end py-2 px-6 font-medium text-white  hover:bg-opacity-95"
+            sx={{ fontFamily: "Popins" }}
+            type="submit"
+          >
+            Save
+          </button>
         </form>
       </SubCard>
     </div>
