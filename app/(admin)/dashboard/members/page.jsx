@@ -44,6 +44,10 @@ const page = () => {
     fetchMembers();
   }, []);
 
+  const receiveDataFromTable = (data) => {
+    // setRowSelectionModel(data);
+    //console.log("selected rows from jhon baptist", rowSelectionModel);
+  };
   return (
     <div>
       <Breadcrumb path={"Members"} brtitle={"Member's Information"} />
@@ -71,9 +75,17 @@ const page = () => {
           </div>
         </div>
         {searchText ? (
-          <Table columns={columns} rows={searchedResults} />
+          <Table
+            columns={columns}
+            rows={searchedResults}
+            sendDataToDevision={receiveDataFromTable}
+          />
         ) : (
-          <Table columns={columns} rows={members} />
+          <Table
+            columns={columns}
+            rows={members}
+            sendDataToDevision={receiveDataFromTable}
+          />
         )}
       </MainCard>
     </div>
