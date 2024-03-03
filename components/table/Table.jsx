@@ -11,10 +11,10 @@ import { useRouter } from "next/navigation";
 
 import { useState } from "react";
 
-const Table = ({ columns, rows }) => {
-  const [selectedRows, setSelectedRows] = useState([]);
+const Table = ({ columns, rows, sendDataToDevision }) => {
   const [rowSelectionModel, setRowSelectionModel] = useState([]);
   //console.log("selected rows are here", rowSelectionModel);
+  sendDataToDevision(rowSelectionModel);
   const router = useRouter();
   const handleRowClick = (param) => {
     const selectedRowId = param.row._id;
