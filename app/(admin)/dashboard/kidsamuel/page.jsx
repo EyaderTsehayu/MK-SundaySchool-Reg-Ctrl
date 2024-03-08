@@ -4,6 +4,7 @@ import MainCard from "@/components/cards/MainCard";
 import Breadcrumb from "@/components/cards/Breadcrumb";
 import Table from "@/components/table/Table";
 import { columns } from "@/utils/columns";
+import { toast } from "react-toastify";
 
 const KidSamuel = () => {
   const [members, setMembers] = useState([]);
@@ -43,12 +44,11 @@ const KidSamuel = () => {
       setMembers(data);
     };
     fetchMembers();
-  }, []);
+  }, [members]);
   const handleEnroll = async () => {
-    if (rowSelectionModel != null) {
-      //console.log("selected rows from kid samuel", rowSelectionModel);
+    if (rowSelectionModel && rowSelectionModel.length > 0) {
       try {
-        const response = await fetch("/api/member/details/enroll", {
+        const response = await fetch("/api/member/details/enrollToJohn", {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -57,15 +57,24 @@ const KidSamuel = () => {
         });
 
         if (response.ok) {
-          console.log("Data updated successfully!");
+          rowSelectionModel.length === 1
+            ? toast.success(
+                `${rowSelectionModel.length} member successfully enrolled to next division.`
+              )
+            : toast.success(
+                `${rowSelectionModel.length} members successfully enrolled to next division.`
+              );
         } else {
-          console.error("Failed to update data.");
+          toast.error("Unable to enroll to the next division.");
         }
       } catch (error) {
         console.error("Error updating data:", error);
       }
+    } else {
+      toast.info("Please select members first.");
     }
   };
+
   const receiveDataFromTable = (data) => {
     setRowSelectionModel(data);
     //  console.log("selected rows from kid samuel", rowSelectionModel);
