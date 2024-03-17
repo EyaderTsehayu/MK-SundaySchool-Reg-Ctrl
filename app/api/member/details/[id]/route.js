@@ -25,6 +25,7 @@ export const PATCH = async (request, { params }) => {
     firstName,
     middleName,
     lastName,
+    profilePicture,
     holyName,
     town,
     gender,
@@ -62,6 +63,7 @@ export const PATCH = async (request, { params }) => {
     existingMember.firstName = firstName;
     existingMember.middleName = middleName;
     existingMember.lastName = lastName;
+    existingMember.profilePicture = profilePicture;
     existingMember.holyName = holyName;
     existingMember.town = town;
     existingMember.gender = gender;
