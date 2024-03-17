@@ -3,11 +3,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { styled } from "@mui/material/styles";
 import Image from "next/image";
-import { createTheme } from "@mui/material/styles";
-import { Divider, useMediaQuery } from "@mui/material";
+import { Divider } from "@mui/material";
 import {
   Box,
-  Drawer,
   List,
   ListItemButton,
   ListItemIcon,
@@ -15,21 +13,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Dashboard } from "@mui/icons-material";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
-import StyleIcon from "@mui/icons-material/Style";
-import SourceOutlinedIcon from "@mui/icons-material/SourceOutlined";
-import SchoolIcon from "@mui/icons-material/School";
-import CastForEducationIcon from "@mui/icons-material/CastForEducation";
-import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import SafetyDividerIcon from "@mui/icons-material/SafetyDivider";
-import AssignmentReturnIcon from "@mui/icons-material/AssignmentReturn";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
-import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import GradingIcon from "@mui/icons-material/Grading";
-import FeedbackIcon from "@mui/icons-material/Feedback";
 import Groups2Icon from "@mui/icons-material/Groups2";
 import ChildCareIcon from "@mui/icons-material/ChildCare";
 import Person4Icon from "@mui/icons-material/Person4";
@@ -138,13 +123,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           icon: <Groups2Icon sx={{ fontSize: "20px", color: "#351478" }} />,
           path: "/dashboard/members",
         },
-        {
-          text: <Typography sx={itemTextStyle}>Departments</Typography>,
-          icon: (
-            <SafetyDividerIcon sx={{ fontSize: "20px", color: "#351478" }} />
-          ),
-          path: "/dashboard/departments",
-        },
+        // {
+        //   text: <Typography sx={itemTextStyle}>Departments</Typography>,
+        //   icon: (
+        //     <SafetyDividerIcon sx={{ fontSize: "20px", color: "#351478" }} />
+        //   ),
+        //   path: "/dashboard/departments",
+        // },
         {
           text: <Typography sx={itemTextStyle}>Registration</Typography>,
           icon: (
@@ -170,49 +155,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
           path: "/dashboard/kidsamuel",
         },
       ],
-
-      academics: [
-        {
-          text: <Typography sx={itemTextStyle}>Curriculum</Typography>,
-          icon: <StyleIcon sx={{ fontSize: "18px", color: "#351478" }} />,
-          path: "curriculum",
-        },
-        {
-          text: <Typography sx={itemTextStyle}>Ac. Curriculum</Typography>,
-          icon: (
-            <SourceOutlinedIcon sx={{ fontSize: "18px", color: "#351478" }} />
-          ),
-          path: "academicCurriculum",
-        },
-        {
-          text: <Typography sx={itemTextStyle}>Registration</Typography>,
-          icon: (
-            <AppRegistrationIcon sx={{ fontSize: "18px", color: "#351478" }} />
-          ),
-          path: "registration",
-        },
-      ],
-      operations: [
-        {
-          text: <Typography sx={itemTextStyle}>Ass. Teachers</Typography>,
-          icon: (
-            <AssignmentReturnIcon sx={{ fontSize: "18px", color: "#351478" }} />
-          ),
-          path: "assignTeacher",
-        },
-        {
-          text: <Typography sx={itemTextStyle}>Student Result</Typography>,
-
-          icon: <GradingIcon sx={{ fontSize: "18px", color: "#351478" }} />,
-          path: "result",
-        },
-
-        {
-          text: <Typography sx={itemTextStyle}>Requests</Typography>,
-          icon: <FeedbackIcon sx={{ fontSize: "18px", color: "#351478" }} />,
-          path: "requests",
-        },
-      ],
     };
   }
   return (
@@ -225,23 +167,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       }`}
     >
       <SideBarTitle sx={styledSidebarTitle}>
-        {/* <img
-          src={require("../assets/unnamed.png")}
-          alt={"W"}
-          loading="W"
-          style={styledImage}
-        /> */}
+        <Image src={"/images/logo.png"} width={60} height={60} alt="logo" />
         <Typography
           variant="p"
           sx={{
-            // isSidebarOpen ?
             fontFamily: "Poppins",
             display: "block", //: "none",
             textAlign: "center",
-            marginLeft: "10px",
             fontWeight: 600,
             fontSize: "20px",
-            color: "#000",
+            color: "#351478",
           }}
         >
           MKSS-RCS
@@ -260,7 +195,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
       {/* list of admin page */}
       <Box
-        sx={{ marginTop: "83px", paddingLeft: "14px", paddingRight: "14px" }}
+        sx={{ marginTop: "90px", paddingLeft: "14px", paddingRight: "14px" }}
       >
         {menuItems.dashboard && (
           <List sx={styledList}>
@@ -310,48 +245,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   //onClick={() => handleClick(item.path)}
                   sx={
                     pathname === item.path ? styledActiveButton : styledButton
-                  }
-                >
-                  <StyledIconWrapper>{item.icon}</StyledIconWrapper>
-                  <ListItemText primary={item.text} />
-                </ListItemButton>
-              </Link>
-            ))}
-          </List>
-        )}
-        <Divider />
-        {menuItems.academics && (
-          <List sx={styledList}>
-            <Typography sx={itemTitleStyle}>Academics</Typography>
-            {menuItems.academics.map((item) => (
-              <Link href={item.path} key={item.path} style={styledLink}>
-                <ListItemButton
-                  //onClick={() => handleClick(item.path)}
-                  sx={
-                    pathname === item.path ? styledActiveButton : styledButton
-                  }
-                >
-                  <StyledIconWrapper>{item.icon}</StyledIconWrapper>
-                  <ListItemText primary={item.text} />
-                </ListItemButton>
-              </Link>
-            ))}
-          </List>
-        )}
-        <Divider />
-
-        {menuItems.operations && (
-          <List sx={styledList}>
-            <Typography sx={itemTitleStyle}>Operations</Typography>
-            {menuItems.operations.map((item) => (
-              <Link href={item.path} key={item.path} style={styledLink}>
-                <ListItemButton
-                  //onClick={() => handleClick(item.path)}
-                  sx={
-                    //isActivePage === item.path
-                    //?
-                    // styledActiveButton
-                    styledButton
                   }
                 >
                   <StyledIconWrapper>{item.icon}</StyledIconWrapper>
@@ -444,16 +337,14 @@ const styledImage = {
 };
 // sidebar title
 const styledSidebarTitle = {
-  // zIndex: isSidebarOpen ? (isSmallScreen ? "0" : "9999") : "9999",
+  display: "flex",
+  justifyContent: "space-between",
+  marginTop: "3px",
+  padding: "20px",
   background: "white",
   height: "83px",
-  //isSidebarOpen ? isSmallScreen ?
   width: "228px",
-  //: "228px"
-  //: isSmallScreen
-  //? "0"
-  //: "50px",
-  margin: "0",
+  //margin: "0",
 };
 
 // item title
