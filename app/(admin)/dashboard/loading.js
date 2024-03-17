@@ -1,0 +1,10 @@
+import Breadcrumb from "@/components/cards/Breadcrumb";
+import MainCard from "@/components/cards/MainCard";
+
+export default function Loading() {
+  return (
+    <div className="flex h-screen items-center justify-center bg-white/80">
+      <div className="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"></div>
+    </div>
+  );
+}
