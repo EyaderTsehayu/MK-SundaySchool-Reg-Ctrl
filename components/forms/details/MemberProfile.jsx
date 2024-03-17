@@ -110,21 +110,34 @@ const MemberProfile = ({ onSubmit, initialValues }) => {
                 helperText={formik.touched.memberId && formik.errors.memberId}
               />
             </Grid>{" "}
-            <Grid item xs={12} md={6}>
-              <TextField
-                id="profilePicture"
-                label="Profile Picture"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                {...formik.getFieldProps("profilePicture")}
-                error={
-                  formik.touched.profilePic && Boolean(formik.errors.profilePic)
-                }
-                helperText={
-                  formik.touched.profilePic && formik.errors.profilePic
-                }
-              />
+            <Grid sx={{ mt: 2 }} item xs={12} md={6}>
+              <div>
+                <label
+                  htmlFor="file_input"
+                  className="p-3.5 block text-sm text-gray-200 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-white dark:border-gray-300 dark:placeholder-blue-100"
+                >
+                  {formik.values.profilePic != null ? (
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-600">
+                      {formik.values.profilePic.name}
+                    </p>
+                  ) : (
+                    <p
+                      class="mt-1 text-sm text-gray-500 dark:text-gray-500"
+                      id="file_input_help"
+                    >
+                      Upload new member's picture. PNG or JPG (MAX. 1Mb).
+                    </p>
+                  )}
+                  <input
+                    type="file"
+                    id="file_input"
+                    className="hidden"
+                    onChange={(event) => {
+                      formik.setFieldValue("profilePic", event.target.files[0]);
+                    }}
+                  />
+                </label>
+              </div>
             </Grid>
             <Grid sx={{ mt: 2 }} item xs={12} md={6}>
               <FormControl fullWidth variant="outlined">
