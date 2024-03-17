@@ -23,7 +23,7 @@ const MemberSchema = new Schema({
   },
   profilePicture: {
     type: String,
-    required: [true, "Profile Picture is required."],
+    // required: [true, "Profile Picture is required."],
   },
   holyName: {
     type: String,
@@ -91,11 +91,11 @@ const MemberSchema = new Schema({
   },
   additionalFile: {
     type: String,
-    required: [true, "Additional File is required."],
+    // required: [true, "Additional File is required."],
   },
   bio: {
     type: String,
-    required: [true, "Bio is required."],
+    // required: [true, "Bio is required."],
   },
   guardianName: {
     type: String,
