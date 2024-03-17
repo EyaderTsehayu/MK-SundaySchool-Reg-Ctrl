@@ -123,8 +123,8 @@ const Login = () => {
           </Grid>
           <Formik
             initialValues={{
-              memberId: "",
-              password: "",
+              memberId: "MKSS/0000",
+              password: "debreselamAdmin",
               submit: null,
             }}
             validationSchema={Yup.object().shape({
@@ -138,10 +138,17 @@ const Login = () => {
               values,
               { setErrors, setStatus, setSubmitting }
             ) => {
-              router.push("/dashboard");
+              if (
+                values.memberId === "MKSS/0000" &&
+                values.password === "debreselamAdmin"
+              ) {
+                router.push("/dashboard");
+                toast.success("Login successfully");
+              } else {
+                toast.error("Invalid credentials");
+              }
               setStatus({ success: true });
               setSubmitting(false);
-              toast.success("Login successfully");
             }}
           >
             {({
