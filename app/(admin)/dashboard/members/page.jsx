@@ -4,8 +4,10 @@ import MainCard from "@/components/cards/MainCard";
 import Breadcrumb from "@/components/cards/Breadcrumb";
 import Table from "@/components/table/Table";
 import { columns } from "@/utils/columns";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
   const [members, setMembers] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
@@ -66,11 +68,13 @@ const page = () => {
 
           <div className="flex gap-4 flex-inline  items-center rounded-md  p-1.5 ">
             <button
-              //  onClick={handleOpen}
+              onClick={() => {
+                router.push("/dashboard/members/add");
+              }}
               className="rounded-lg  bg-blue-700 items-end py-2 px-6 font-medium text-white  hover:bg-opacity-95"
               sx={{ fontFamily: "Popins" }}
             >
-              Register
+              Add New Member
             </button>
           </div>
         </div>
