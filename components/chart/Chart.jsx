@@ -9,73 +9,45 @@ import {
 } from "recharts";
 import "./chart.scss";
 
-const data = [
-  {
-    name: "September",
-    male: 4234,
-    female: 2323,
-    amt: 2500,
-  },
-  {
-    name: "October",
-    male: 4300,
-    female: 3490,
-    amt: 2100,
-  },
-  {
-    name: "November",
-    male: 3490,
-    female: 4300,
-    amt: 2100,
-  },
-  {
-    name: "December",
-    male: 3490,
-    female: 4300,
-    amt: 2100,
-  },
-  {
-    name: "January",
-    male: 4000,
-    female: 2400,
-    amt: 2400,
-  },
-  {
-    name: "February",
-    male: 3000,
-    female: 1398,
-    amt: 2210,
-  },
-  {
-    name: "March",
-    male: 2000,
-    female: 9800,
-    amt: 2290,
-  },
-  {
-    name: "April",
-    male: 2780,
-    female: 3908,
-    amt: 2000,
-  },
-  {
-    name: "May",
-    male: 1890,
-    female: 4800,
-    amt: 2181,
-  },
-];
+const Chart = ({ data }) => {
+  const workCount = {};
+  data.forEach((obj) => {
+    const workCondition = obj.workCondition;
+    if (workCount[workCondition]) {
+      workCount[workCondition]++;
+    } else {
+      workCount[workCondition] = 1;
+    }
+  });
+  // console.log("Work count", workCount);
 
-const Chart = () => {
+  // alternative way
+  // data.forEach((obj) => {
+  //   const workCondition = obj.workCondition;
+  //   if (workCondition in workCount) {
+  //     workCount[workCondition]++;
+  //   } else {
+  //     workCount[workCondition] = 1;
+  //   }
+  // });
+
+  // Convert the count to the desired format
+  const resultArray = [];
+  for (const work in workCount) {
+    resultArray.push({ work: work, count: workCount[work] });
+  }
+
+  // console.log("result array inside the chart", resultArray);
+
   return (
     <div className="chart">
-      <div className="title"> {"Total Registration Rate"}</div>
+      <div className="title"> {"Memeber's work condition"}</div>
       <div className="chart-list">
         <ResponsiveContainer width={"100%"} height={575}>
           <AreaChart
             width={730}
             height={250}
-            data={data}
+            data={resultArray}
             margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
             backgroundColor={"#fff"}
           >
@@ -89,24 +61,24 @@ const Chart = () => {
                 <stop offset="95%" stopColor="#5e35b1" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <XAxis dataKey="name" />
+            <XAxis dataKey="work" />
             <YAxis />
             <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />
             <Area
               type="monotone"
-              dataKey="male"
+              dataKey="count"
               stroke="#1e88e5"
               fillOpacity={1}
               fill="url(#colormale)"
             />
-            <Area
+            {/* <Area
               type="monotone"
               dataKey="female"
               stroke="#5e35b1"
               fillOpacity={1}
               fill="url(#colorfemale)"
-            />
+            /> */}
           </AreaChart>
         </ResponsiveContainer>
       </div>
