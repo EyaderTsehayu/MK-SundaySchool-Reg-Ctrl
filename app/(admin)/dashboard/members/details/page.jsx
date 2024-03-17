@@ -63,72 +63,157 @@ const Details = () => {
   const userId = searchParams.get("id");
 
   const handleSubmit = async (values) => {
-    try {
-      const response = await fetch(`/api/member/details/${userId}`, {
-        method: "PATCH",
-        body: JSON.stringify({
-          firstName: values.firstName,
-          middleName: values.middleName,
-          lastName: values.lastName,
-          profilePicture: values.profilePicture,
-          memberId: values.memberId,
-          holyName: values.holyName,
-          town: values.town,
-          gender: values.gender,
-          placeOfBirth: values.placeOfBirth,
-          dateOfBirth: values.dateOfBirth,
-          holyFatherName: values.holyFatherName,
-          dateOfJoining: values.dateOfJoining,
-          department: values.department,
-          division: values.division,
-          status: values.status,
-          phoneNumber: values.phoneNumber,
-          address: values.address,
-          kebele: values.kebele,
-          houseNumber: values.houseNumber,
-          workCondition: values.workCondition,
-          officeName: values.officeName,
-          additionalFile: values.additionalFile,
-          bio: values.bio,
-          guardianName: values.guardianName,
-          parentPhoneNumber: values.parentPhoneNumber,
-        }),
-      });
+    console.log("Values in details", values.profilePic);
+    const image = values.profilePic;
 
-      if (response.ok) {
-        // router.push("/");
-        setMember({
-          firstName: values.firstName,
-          middleName: values.middleName,
-          lastName: values.lastName,
-          profilePicture: values.profilePicture,
-          memberId: values.memberId,
-          holyName: values.holyName,
-          town: values.town,
-          gender: values.gender,
-          placeOfBirth: values.placeOfBirth,
-          dateOfBirth: values.dateOfBirth,
-          holyFatherName: values.holyFatherName,
-          dateOfJoining: values.dateOfJoining,
-          department: values.department,
-          division: values.division,
-          status: values.status,
-          phoneNumber: values.phoneNumber,
-          address: values.address,
-          kebele: values.kebele,
-          houseNumber: values.houseNumber,
-          workCondition: values.workCondition,
-          officeName: values.officeName,
-          additionalFile: values.additionalFile,
-          bio: values.bio,
-          guardianName: values.guardianName,
-          parentPhoneNumber: values.parentPhoneNumber,
-        });
-        toast.success("Successfully updated");
-        // console.log("Successfully updated");
+    if (image != null) {
+      const formData = new FormData();
+      formData.append("file", image);
+      formData.append("upload_preset", "mkss_pro_pic");
+      const uploadResponse = await fetch(
+        "https://api.cloudinary.com/v1_1/dqavpwzbn/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const uploadedImageData = await uploadResponse.json();
+      const imageUrl = uploadedImageData.secure_url;
+      if (imageUrl !== null) {
+        try {
+          const response = await fetch(`/api/member/details/${userId}`, {
+            method: "PATCH",
+            body: JSON.stringify({
+              firstName: values.firstName,
+              middleName: values.middleName,
+              lastName: values.lastName,
+              profilePicture: imageUrl,
+              memberId: values.memberId,
+              holyName: values.holyName,
+              town: values.town,
+              gender: values.gender,
+              placeOfBirth: values.placeOfBirth,
+              dateOfBirth: values.dateOfBirth,
+              holyFatherName: values.holyFatherName,
+              dateOfJoining: values.dateOfJoining,
+              department: values.department,
+              division: values.division,
+              status: values.status,
+              phoneNumber: values.phoneNumber,
+              address: values.address,
+              kebele: values.kebele,
+              houseNumber: values.houseNumber,
+              workCondition: values.workCondition,
+              officeName: values.officeName,
+              additionalFile: values.additionalFile,
+              bio: values.bio,
+              guardianName: values.guardianName,
+              parentPhoneNumber: values.parentPhoneNumber,
+            }),
+          });
+          if (response.ok) {
+            //  router.push("/");
+            setMember({
+              firstName: values.firstName,
+              middleName: values.middleName,
+              lastName: values.lastName,
+              profilePicture: values.profilePicture,
+              memberId: values.memberId,
+              holyName: values.holyName,
+              town: values.town,
+              gender: values.gender,
+              placeOfBirth: values.placeOfBirth,
+              dateOfBirth: values.dateOfBirth,
+              holyFatherName: values.holyFatherName,
+              dateOfJoining: values.dateOfJoining,
+              department: values.department,
+              division: values.division,
+              status: values.status,
+              phoneNumber: values.phoneNumber,
+              address: values.address,
+              kebele: values.kebele,
+              houseNumber: values.houseNumber,
+              workCondition: values.workCondition,
+              officeName: values.officeName,
+              additionalFile: values.additionalFile,
+              bio: values.bio,
+              guardianName: values.guardianName,
+              parentPhoneNumber: values.parentPhoneNumber,
+            });
+            toast.success("Successfully updated");
+          }
+        } catch (error) {
+          console.log(error);
+        }
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      try {
+        const response = await fetch(`/api/member/details/${userId}`, {
+          method: "PATCH",
+          body: JSON.stringify({
+            firstName: values.firstName,
+            middleName: values.middleName,
+            lastName: values.lastName,
+            profilePicture: values.profilePicture,
+            memberId: values.memberId,
+            holyName: values.holyName,
+            town: values.town,
+            gender: values.gender,
+            placeOfBirth: values.placeOfBirth,
+            dateOfBirth: values.dateOfBirth,
+            holyFatherName: values.holyFatherName,
+            dateOfJoining: values.dateOfJoining,
+            department: values.department,
+            division: values.division,
+            status: values.status,
+            phoneNumber: values.phoneNumber,
+            address: values.address,
+            kebele: values.kebele,
+            houseNumber: values.houseNumber,
+            workCondition: values.workCondition,
+            officeName: values.officeName,
+            additionalFile: values.additionalFile,
+            bio: values.bio,
+            guardianName: values.guardianName,
+            parentPhoneNumber: values.parentPhoneNumber,
+          }),
+        });
+
+        if (response.ok) {
+          // router.push("/");
+          setMember({
+            firstName: values.firstName,
+            middleName: values.middleName,
+            lastName: values.lastName,
+            profilePicture: values.profilePicture,
+            memberId: values.memberId,
+            holyName: values.holyName,
+            town: values.town,
+            gender: values.gender,
+            placeOfBirth: values.placeOfBirth,
+            dateOfBirth: values.dateOfBirth,
+            holyFatherName: values.holyFatherName,
+            dateOfJoining: values.dateOfJoining,
+            department: values.department,
+            division: values.division,
+            status: values.status,
+            phoneNumber: values.phoneNumber,
+            address: values.address,
+            kebele: values.kebele,
+            houseNumber: values.houseNumber,
+            workCondition: values.workCondition,
+            officeName: values.officeName,
+            additionalFile: values.additionalFile,
+            bio: values.bio,
+            guardianName: values.guardianName,
+            parentPhoneNumber: values.parentPhoneNumber,
+          });
+          toast.success("Successfully updated");
+          // console.log("Successfully updated");
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -386,7 +471,7 @@ const Details = () => {
                 />
               </TabPanel>
               <TabPanel value={value} index={3} smallScreen={smallScreen}>
-                <SubCard>Item Four</SubCard>
+                <SubCard>Service Biography</SubCard>
               </TabPanel>
             </Box>
           </Box>
