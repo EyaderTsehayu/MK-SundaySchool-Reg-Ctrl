@@ -32,7 +32,7 @@ const ProfileHeader = ({ initialValues }) => {
 
         <div className="flex flex-col items-baseline gap-2 ">
           <Typography
-            variant="h2"
+            variant="h4"
             sx={fullName}
             className="lg:text-3xl text-2xl text-center"
           >
