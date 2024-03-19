@@ -18,7 +18,8 @@ const JhonTheBaptist = () => {
     return members.filter(
       (item) =>
         regex.test(item.memberId) ||
-        regex.test(item.fullName) ||
+        regex.test(item.firstName) ||
+        regex.test(item.middleName) ||
         regex.test(item.department) ||
         regex.test(item.status) ||
         regex.test(item.division)
@@ -33,7 +34,7 @@ const JhonTheBaptist = () => {
       setTimeout(() => {
         const searchResult = filterPrompts(e.target.value);
         setSearchedResults(searchResult);
-      }, 500)
+      }, 200)
     );
   };
 

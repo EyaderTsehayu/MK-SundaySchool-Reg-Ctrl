@@ -16,7 +16,8 @@ const Youth = () => {
     return members.filter(
       (item) =>
         regex.test(item.memberId) ||
-        regex.test(item.fullName) ||
+        regex.test(item.firstName) ||
+        regex.test(item.middleName) ||
         regex.test(item.department) ||
         regex.test(item.status) ||
         regex.test(item.division)
@@ -31,7 +32,7 @@ const Youth = () => {
       setTimeout(() => {
         const searchResult = filterPrompts(e.target.value);
         setSearchedResults(searchResult);
-      }, 500)
+      }, 200)
     );
   };
 
@@ -64,13 +65,13 @@ const Youth = () => {
           </div>
 
           <div className="flex gap-4 flex-inline  items-center rounded-md  p-1.5 ">
-            <button
+            {/* <button
               //  onClick={handleOpen}
               className="rounded-lg  bg-blue-700 items-end py-2 px-6 font-medium text-white  hover:bg-opacity-95"
               sx={{ fontFamily: "Popins" }}
             >
               Enroll
-            </button>
+            </button> */}
           </div>
         </div>
         {searchText ? (
