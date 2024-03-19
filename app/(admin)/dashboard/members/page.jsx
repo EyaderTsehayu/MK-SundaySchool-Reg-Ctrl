@@ -48,7 +48,7 @@ const page = () => {
   }, [members]);
 
   const receiveDataFromTable = (data) => {
-    // setRowSelectionModel(data);
+    setRowSelectionModel(data);
     //console.log("selected rows from jhon baptist", rowSelectionModel);
   };
   return (
