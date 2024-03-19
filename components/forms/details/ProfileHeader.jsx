@@ -29,7 +29,6 @@ const ProfileHeader = ({ initialValues }) => {
             alt="User"
           />
         </div>
-
         <div className="flex flex-col items-baseline gap-2 ">
           <Typography
             variant="h4"
