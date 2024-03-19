@@ -11,6 +11,7 @@ const page = () => {
   const [members, setMembers] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
+  const [rowSelectionModel, setRowSelectionModel] = useState([]);
   const [searchedResults, setSearchedResults] = useState([]);
 
   const filterPrompts = (searchtext) => {
