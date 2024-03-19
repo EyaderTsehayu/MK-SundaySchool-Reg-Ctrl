@@ -43,7 +43,7 @@ const Youth = () => {
       setMembers(data);
     };
     fetchMembers();
-  }, []);
+  }, [members]);
   const receiveDataFromTable = (data) => {
     // setRowSelectionModel(data);
     //console.log("selected rows from jhon baptist", rowSelectionModel);

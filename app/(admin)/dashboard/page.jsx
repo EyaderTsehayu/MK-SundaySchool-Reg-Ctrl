@@ -32,7 +32,7 @@ const Dashboard = () => {
       }
     };
     fetchDepartments();
-  }, []);
+  }, [members]);
 
   useEffect(() => {
     const fetchMembers = async () => {

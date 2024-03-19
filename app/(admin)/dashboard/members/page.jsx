@@ -45,7 +45,7 @@ const page = () => {
       setMembers(data);
     };
     fetchMembers();
-  }, []);
+  }, [members]);
 
   const receiveDataFromTable = (data) => {
     // setRowSelectionModel(data);
