@@ -21,7 +21,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const response = await fetch("/api/member");
+        const response = await fetch("/api/member/all");
         const data = await response.json();
 
         if (response.ok) {

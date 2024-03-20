@@ -41,7 +41,7 @@ const page = () => {
 
   useEffect(() => {
     const fetchMembers = async () => {
-      const response = await fetch("/api/member");
+      const response = await fetch("/api/member/all");
       const data = await response.json();
       setMembers(data);
     };

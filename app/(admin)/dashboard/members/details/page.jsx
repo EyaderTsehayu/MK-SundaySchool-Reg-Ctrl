@@ -366,7 +366,7 @@ const Details = () => {
                         sx={itemSubTitle}
                         className=" text-slate-500 "
                       >
-                        Detailed profile
+                        Member's detailed profile
                       </Typography>
                     </div>
                   </Box>
